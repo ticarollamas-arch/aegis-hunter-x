@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  aegis-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - LLM_API_URL=http://ollama:11434/api/generate
+      - LLM_MODEL=llama3
+    volumes:
+      - ./db:/app/db
+    restart: always
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama_data:/root/.ollama
+    restart: always
